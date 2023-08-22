@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block start %}
+{% load static %}
+
+
+<div class="container mt-5">
+
+  <form class="col-6 mx-auto card p-3" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2> Add Recipe </h2>
+    <hr>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label"> Recipe name</label>
+      <input type="text" class="form-control" name="recipe_name">
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label"> Recipe description </label>
+      <textarea class="form-control" name="recipe_description"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label"> Recipe Image </label>
+      <input type="file" class="form-control" name="recipe_image">
+    </div>
+
+    <button type="submit" class="btn btn-success"> Add recipe </button>
+  </form>
+
+  <hr>
+
+  <form>
+    <div class="mt-5">
+      <div class="col-6 mx-auto">
+        <div class="mb-1">
+          <label for="exampleInputEmail1" class="form-label"> Search </label>
+          <input type="text" class="form-control" name="search">
+        </div>
+        <button class="btn btn-primary"> Search </button>
+      </div>
+    </div>
+
+  </form>
+
+  <table class="table mt-5">
+
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Recipe name</th>
+        <th scope="col">Recipe description</th>
+        <th scope="col">Recipe image</th>
+        <th scope="col"> ops </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for recipe in recipe %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{recipe.recipe_name}}</td>
+        <td>{{recipe.recipe_description}}</td>
+        <td>
+          <img src="images/{{recipe.recipe_image}}" style="height: 120px; width: 120px;"></td>
+        <td>
+          <a href="/delete/{{recipe.id}}"> <button class="btn btn-danger"> Delete </button> </a> 
+          <a href="/update/{{recipe.id}}"> <button class="btn btn-success mt-2"> Update </button> </a> 
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+</div>
+
+
+{% endblock %}

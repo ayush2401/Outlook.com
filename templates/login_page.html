@@ -1,33 +1,32 @@
 {% extends "base.html" %}
 {% block start %}
 
-<div class="container mt-5">
+<div class="wrapper">
 
-    <form class="col-6 mx-auto card p-3" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <h1> Login </h1>
-        <hr>
+  <div class="logo">
+      <img src="https://cms-assets.tutsplus.com/uploads/users/343/posts/23627/preview_image/tutsplus-icon.png" alt="">
+  </div>
+  <div class="text-center mt-4 name">
+      Sign in
+  </div>
 
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-primary" role="alert">
-               {{ message }}
-              </div>
-            {% endfor %}
-        {% endif %}
+  <form class="p-3 mt-3" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+      <div class="form-field d-flex align-items-center">
+          <span class="far fa-user"></span>
+          <input type="text" name="username" id="userName" placeholder="Username">
+      </div>
+      <div class="form-field d-flex align-items-center">
+          <span class="fas fa-key"></span>
+          <input type="password" name="password" id="pwd" placeholder="Password">
+      </div>
+      <button class="btn mt-3">Login</button>
+  </form>
 
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">User name</label>
-          <input type="text" class="form-control" name="username">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label"> Password </label>
-          <input type="password" class="form-control" name="password">
-        </div>
-       
-        <p>Dont have account <a href="/register"> register </a></p>
-        <button type="submit" class="btn btn-success"> Login</button>
-    </form>
+  <div class="text-center fs-6">
+      <a href="/login">Forget password?</a> or <a href="/register">Sign up</a>
+  </div>
+  
 
 </div>
 

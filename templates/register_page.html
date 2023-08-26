@@ -3,36 +3,6 @@
 
 <div class="container mt-5">
 
-    <!-- <form class="col-6 mx-auto card p-3" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <h1> Register</h1>
-      <hr>
-      
-      
-
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">First name</label>
-            <input type="text" class="form-control" name="first_name">
-          </div>
-
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">last name</label>
-            <input type="text" class="form-control" name="last_name">
-          </div>
-
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">User name</label>
-          <input type="text" class="form-control" name="username">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" name="password">
-        </div>
-        
-        <p> Already have account <a href="/login"> login </a></p>
-        <button type="submit" class="btn btn-success">Register</button>
-      </form> -->
-
       <div class="wrapper">
 
         <div class="text-center mt-4 name">
@@ -54,22 +24,22 @@
           {% csrf_token %}
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
-                <input type="text" name="first_name" id="userName" placeholder="First name">
+                <input type="text" name="first_name" required="true" placeholder="First name">
             </div>
       
             <div class="form-field d-flex align-items-center">
                 <span class="fas fa-key"></span>
-                <input type="text" name="last_name" id="pwd" placeholder="Last name">
+                <input type="text" name="last_name"  placeholder="Last name">
             </div>
       
             <div class="form-field d-flex align-items-center">
               <span class="fas fa-key"></span>
-              <input type="text" name="username" id="pwd" placeholder="Username">
+              <input type="text" name="username" required="true" placeholder="Username">
           </div>
       
           <div class="form-field d-flex align-items-center">
             <span class="fas fa-key"></span>
-            <input type="password" name="password" id="pwd" placeholder="Password">
+            <input type="password" name="password" required="true"  placeholder="Password">
         </div>
       
             <button class="btn mt-3"> Register </button>

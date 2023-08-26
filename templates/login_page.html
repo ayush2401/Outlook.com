@@ -2,7 +2,16 @@
 {% block start %}
 
 <div class="wrapper">
-
+    {% if messages %}
+        <hr>
+            {% for message in messages %}
+            <div class="form-field d-flex align-items-center btn mt-3">
+              <span class="fas fa-key" role="alert" style="color: aliceblue; padding-left: 20px;">
+               {{ message }}
+              </span></div>
+            {% endfor %}
+        {% endif %}
+        
   <div class="logo">
       <img src="https://cms-assets.tutsplus.com/uploads/users/343/posts/23627/preview_image/tutsplus-icon.png" alt="">
   </div>

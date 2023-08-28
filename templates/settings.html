@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block start %}
+{% load static %}
+
+<div class="container">
+        <div class="card col-xl-10 col-lg-12 mx-auto mt-3">
+            <div class="card-header">
+                <h5> Update settings </h5>
+            </div>
+            <div class="card-body">
+                <div class="col-12 col-xl-12 mt-2">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message}}
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+        
+                        <div class="mb-3">
+                            <img src="{{profile.profile_pic.url}}" style="height: 100px; width: 100px;" class="mb-3">
+                            <label class="form-label"> Image </label>
+                            <input type="file" class="form-control" name="image">
+                        </div>
+        
+                        <div class="mb-3">
+                            <label class="form-label"> Bio </label>
+                            <textarea class="form-control" name="bio">{{ profile.bio }}</textarea>
+                        </div>
+        
+                        <div class="mb-3">
+                            <label class="form-label"> location </label>
+                            <input class="form-control" name="location" value="{{profile.location}}"></input>
+                        </div>
+        
+                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+{% endblock %}

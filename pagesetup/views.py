@@ -8,70 +8,15 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url ='/login')
 def index(request):
 
-
-    if request.method == "POST":
-        data = request.POST
+    first_name = request.user.first_name
+    profile = Profile.objects.get(user = request.user)
     
-
-        recipe_name = data.get('recipe_name')
-        recipe_description = data.get('recipe_description')
-        recipe_image = request.FILES['recipe_image']
-
-        # current = request.user
-        # user = User.objects.get(username = current.username)
-        # new_item = Recipe.objects.create(user = user ,)
-
-        Recipe.objects.create(
-            user = request.user,
-            recipe_name= recipe_name,
-            recipe_description= recipe_description,
-            recipe_image= recipe_image,
-        )
-    
-        return redirect('/')
-
-    queryset = Recipe.objects.filter(user=request.user)
-
-    if request.GET.get('search'):
-        queryset = queryset.filter(recipe_name__icontains = request.GET.get('search'))
-
-
     context = {
-        'username':request.user.username,
-        'recipe' : queryset,
+        'first_name':first_name.upper(),
+        'profile':profile,
     }
 
     return render (request , 'index.html' , context)
-
-@login_required(login_url ='/login')
-def delete(request , id):
-
-    Recipe.objects.get(id=id).delete()
-    return redirect('/')
-
-@login_required(login_url ='/login')
-def update(request , id):
-    data = Recipe.objects.get(id = id)
-
-    if request.method == "POST":
-        recipe_name = request.POST.get('recipe_name')
-        recipe_description = request.POST.get('recipe_description')
-        recipe_image = request.FILES.get('recipe_image')
-
-        
-        data.recipe_name= recipe_name
-        data.recipe_description= recipe_description
-
-        if recipe_image:
-            data.recipe_image = recipe_image
-        
-        data.save()
-        return redirect('/')
-    
-    context = {'recipe':data }
-
-    return render(request , 'update.html' , context)
-
 
 def login_page(request):
 
@@ -90,6 +35,7 @@ def login_page(request):
             messages.error(request , 'Invalid password')
             return redirect('/login')
         else:
+
             login(request,user)
             return redirect('/')
 
@@ -126,7 +72,36 @@ def register_page(request):
         user.set_password(password)
         user.save()
 
-        messages.info(request, "Account created succesfully")
+        user_model = User.objects.get(username=username)
+        new_profile = Profile.objects.create(user=user_model)
+        new_profile.save()
+
         return redirect('/register')
 
     return render(request , 'register_page.html')
+
+@login_required(login_url='/login')
+def settings(request):
+
+    if request.method == "POST":
+        bio = request.POST.get('bio')
+        location = request.POST.get('location')
+        image = request.FILES.get('image')
+
+        profile = Profile.objects.get(user=request.user)
+        profile.bio = bio
+        profile.location = location
+
+        if image:
+            profile.profile_pic = image
+        
+        profile.save()
+        messages.success(request,"Profile updated successfully")
+        return redirect('/settings')
+    
+    profile = Profile.objects.get(user=request.user)
+    context = {
+        'profile':profile,
+    }
+
+    return render(request , 'settings.html' , context)

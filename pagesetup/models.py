@@ -8,3 +8,6 @@ class Recipe(models.Model):
     recipe_name = models.CharField(max_length=100)
     recipe_description = models.TextField()
     recipe_image = models.ImageField(upload_to= "recipes")
+
+    def __str__(self):
+        return f'{self.user.id} | {self.recipe_name}'

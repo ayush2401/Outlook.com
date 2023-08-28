@@ -1,5 +1,6 @@
 from django.shortcuts import render , redirect
 from .models import *
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
@@ -16,7 +17,12 @@ def index(request):
         recipe_description = data.get('recipe_description')
         recipe_image = request.FILES['recipe_image']
 
+        # current = request.user
+        # user = User.objects.get(username = current.username)
+        # new_item = Recipe.objects.create(user = user ,)
+
         Recipe.objects.create(
+            user = request.user,
             recipe_name= recipe_name,
             recipe_description= recipe_description,
             recipe_image= recipe_image,
@@ -24,11 +30,14 @@ def index(request):
     
         return redirect('/')
 
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.filter(user=request.user)
+
     if request.GET.get('search'):
         queryset = queryset.filter(recipe_name__icontains = request.GET.get('search'))
 
+
     context = {
+        'username':request.user.username,
         'recipe' : queryset,
     }
 
@@ -93,33 +102,31 @@ def logout_page(request):
 
 def register_page(request):
 
-    
     if request.method == "POST":
+
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
+
 
         user = User.objects.filter(username = username)
 
         if user.exists():
             messages.info(request, "Username already taken")
             return redirect('/register')
-        
-        
+
+
         user = User.objects.create(
             first_name = first_name,
             last_name = last_name,
             username = username,
         )
 
-        
         user.set_password(password)
         user.save()
 
         messages.info(request, "Account created succesfully")
         return redirect('/register')
-
 
     return render(request , 'register_page.html')

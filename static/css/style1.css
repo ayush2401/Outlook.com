@@ -13,7 +13,7 @@
   }
   
 .banner{
-    background-image: url(img/banner.jpg);
+    background-image: url(../../static/images/banner.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -91,19 +91,4 @@
   }
 
 /*----------------------------------------------------------------------------------------------------------------------------*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -19,13 +19,23 @@
                             </div>
                             {% endfor %}
                         {% endif %}
-        
+
+                        
                         <div class="mb-3">
-                            <img src="{{profile.profile_pic.url}}" style="height: 100px; width: 100px;" class="mb-3">
-                            <label class="form-label"> Image </label>
+                            <img src="{{profile.profile_pic.url}}" style="height: 200px; width: 200px;" class="mb-3">
                             <input type="file" class="form-control" name="image">
                         </div>
-        
+                        
+                        <div class="mb-3">
+                            <label class="form-label"> First name </label>
+                            <input class="form-control" name="first_name" value="{{user.first_name}}"></input>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"> Last name </label>
+                            <input class="form-control" name="last_name" value="{{user.last_name}}"></input>
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label"> Bio </label>
                             <textarea class="form-control" name="bio">{{ profile.bio }}</textarea>

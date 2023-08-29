@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}" />
+
+    <!------------------LIght BOx for Gallery-------------->
+    <link rel="stylesheet" href="lightbox.min.css" />
+    <script type="text/javascript" src="{% static 'js/lightbox-plus-jquery.min.js' %}" ></script>
+    <!------------------LIght BOx for Gallery-------------->
+
+    <title>Outlook</title>
+  </head>
+
+  <body>
+
+    <!-------------------------------NAvigation Starts------------------>
+    <nav
+      class="navbar navbar-expand-md navbar-dark mb-4"
+      style="background-color: #3097d1"
+    >
+      <a href="/" class="navbar-brand"
+        ><img
+          src="{% static 'images/brand-white.png' %}"
+          alt="logo"
+          class="img-fluid"
+          width="80px"
+          height="100px"
+      /></a>
+
+      <button
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#responsive"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="responsive">
+        <ul class="navbar-nav mr-auto text-capitalize">
+          <li class="nav-item"><a href="/" class="nav-link active">home</a></li>
+          <li class="nav-item"><a href="/profile" class="nav-link active">Profile</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link active"> Logout </a> </li>
+          <li class="nav-item"><a href="/settings" class="nav-link active"> Settings </a> </li>
+        </ul>
+
+        <h5 class="d-none d-md-block mt-2" style="color: white">
+          {{first_name}},
+        </h5>
+        <a
+          href="notification.html"
+          class="text-decoration-none"
+          style="color: #cbe4f2; font-size: 22px"
+          ><i class="far fa-bell ml-3 d-none d-md-block"></i
+        ></a>
+
+        <img
+          src="{{navicon.url}}"
+          alt=""
+          class="rounded-circle ml-3 d-none d-md-block"
+          width="32px"
+          height="32px"
+        />
+      </div>
+    </nav>
+    <!---------------------------------------------Ends navigation------------------------------>
+
+
+
+    <!-----------------------------------Banner/img Starts-------------------->
+    <div style="height: 500px; margin-top: -2%; background-size: cover; background-repeat: no-repeat; background-position: center; background-image: url({% static 'images/banner.jpg' %});">
+      <div class="banner-title d-flex flex-column justify-content-center align-items-center">
+        <img
+          src="{{profile.profile_pic.url}}"
+          alt="img"
+          class="rounded-circle mb-2"
+          width="80px"
+          height="80px"
+        />
+        <h3 class="text-light mb-2">{{name}}</h3>
+        <p class="text-light">
+          {{profile.bio}}
+        </p>
+      </div>
+
+      <div class="banner-end d-flex justify-content-center align-items-end">
+        <ul class="nav text-light">
+          <li class="nav-item nav-link active">Photos</li>
+          <li class="nav-item nav-link">Others</li>
+          <li class="nav-item nav-link">Anothers</li>
+        </ul>
+      </div>
+    </div>
+
+
+
+    <!--------------------Profile feed----------------->
+    <div class="container my-3">
+      <div class="row">
+
+        {% for post in posts %}
+        <div class="col-lg-4 mb-2">
+          <div class="card">
+            <div class="card-body m-0 p-0">
+              <img src="{{post.image.url}}" class="w-100" height="350px">
+            </div>
+            <div class="card-footer">
+              <strong>{{post.likes}} likes</strong>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

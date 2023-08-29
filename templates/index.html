@@ -5,28 +5,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
     <link rel="stylesheet" href="{% static 'css/style1.css' %}" />
 
     <!------------------LIght BOx for Gallery-------------->
     <link rel="stylesheet" href="lightbox.min.css" />
-    <script
-      type="text/javascript"
-      src="{% static 'js/lightbox-plus-jquery.min.js' %}"
-    ></script>
+    <script type="text/javascript" src="{% static 'js/lightbox-plus-jquery.min.js' %}" ></script>
     <!------------------LIght BOx for Gallery-------------->
-    <title> Outlook </title>
+    
+    <title>Outlook</title>
   </head>
   <body>
-    <!-------------------------------NAvigation Starts------------------>
 
+    <!-------------------------------NAvigation Starts------------------>
     <nav
       class="navbar navbar-expand-md navbar-dark mb-4"
       style="background-color: #3097d1"
@@ -51,16 +43,20 @@
       <div class="collapse navbar-collapse" id="responsive">
         <ul class="navbar-nav mr-auto text-capitalize">
           <li class="nav-item"><a href="/" class="nav-link active">home</a></li>
-          <li class="nav-item"><a href="/logout" class="nav-link active"> Logout </a></li>
-          <li class="nav-item"><a href="/settings" class="nav-link active"> Settings </a></li>
+          <li class="nav-item"><a href="/profile" class="nav-link active">Profile</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link active"> Logout </a> </li>
+          <li class="nav-item"><a href="/settings" class="nav-link active"> Settings </a> </li>
         </ul>
 
-        <h5 class="d-none d-md-block mt-2" style="color: white;"> {{first_name}}, </h5>
+        <h5 class="d-none d-md-block mt-2" style="color: white">
+          {{first_name}},
+        </h5>
         <a
           href="notification.html"
           class="text-decoration-none"
           style="color: #cbe4f2; font-size: 22px"
-          ><i class="far fa-bell ml-3 d-none d-md-block"></i></a>
+          ><i class="far fa-bell ml-3 d-none d-md-block"></i
+        ></a>
 
         <img
           src="{{profile.profile_pic.url}}"
@@ -71,14 +67,14 @@
         />
       </div>
     </nav>
-
     <!---------------------------------------------Ends navigation------------------------------>
+    
+    
     <!-------------------------------------------Start body --------------------------------->
-
     <div class="container">
       <div class="row">
-        <!--------------------------left columns  start-->
 
+        <!--------------------------left columns  start-->
         <div class="col-12 col-lg-3">
           <div class="left-column">
             <div class="card card-left1 mb-4">
@@ -95,21 +91,23 @@
                   height="120px"
                   class="rounded-circle mt-n5"
                 />
-                <h5 class="card-title mt-3"> {{user.first_name }} {{user.last_name}}</h5>
-                <p class="card-text text-justify mb-2">
-                  {{  profile.bio }}
-                </p>
+                <h5 class="card-title mt-3">
+                  {{user.first_name }} {{user.last_name}}
+                </h5>
+                <p class="card-text text-justify mb-2">{{ profile.bio }}</p>
                 <ul class="list-unstyled nav justify-content-center">
                   <a href="#" class="text-dark text-decoration-none">
                     <li class="nav-item">
                       Followers <br />
                       <strong>12M</strong>
-                    </li></a>
+                    </li></a
+                  >
                   <a href="#" class="text-dark text-decoration-none mx-3">
                     <li class="nav-item">
                       Posts <br />
                       <strong>1</strong>
-                    </li></a>
+                    </li></a
+                  >
                 </ul>
               </div>
             </div>
@@ -197,74 +195,114 @@
             </div>
           </div>
         </div>
-
         <!--------------------------Ends Left columns-->
 
 
-
         <!---------------------------------------Middle columns  start---------------->
-                    
-            <div class="col-12 col-lg-6" >
-                <div class="middle-column">
+        <div class="col-12 col-lg-6">
+          <div class="middle-column">
 
-
-                    <div class="card" >
-
-
-                        <div class="card-header bg-transparent">
-                            <form class="form-inline">
-
-
-                                <div class="input-group w-100">
-                                 <input type="text" name="message" id="message" placeholder="Message" class="form-control form-control-md">
-
-                                 <div class="input-group-append">
-                                        <div class="input-group-text">
-                                                <i class="fas fa-camera"></i>
-                                            </div>
-                                 </div>
-                                </div>
-                            </form>
-                        </div>
-
-
-
-
-
-
-                           
-                        <div class="card-body">
-                        </div>
-
-                        <hr>
-                        
-                        <div class="card-body">
-                        </div>
-
-                        <hr>
-
-                        <div class="card-body">
-                        </div>
-
-
+            <div class="card">
+              <button
+                type="button"
+                class="btn mt-2 w-100"
+                data-toggle="modal"
+                data-target="#exampleModalCenter"
+              >
+                <form class="form-inline">
+                  <div class="input-group w-100">
+                    <input
+                      type="text"
+                      name="message"
+                      id="message"
+                      placeholder="What's on your mind, {{first_name}}?"
+                      class="form-control form-control-md"
+                      style="background-color: #e9ecef"
+                    />
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                              <i class="fas fa-camera"></i>
+                          </div>
                     </div>
+                  </div>
+                </form>
+              </button>
 
+              <!-- Modal Starts------------------ -->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle"> Create Post </h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/post" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    
+                        <div class="mb-2">
+                            <input type="file" class="form-control" required="true" name="image">
+                        </div>
+                        <div class="mb-2">
+                            <input class="form-control" name="caption" placeholder="caption...">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <!-- Modal Ends---------------- -->
             </div>
-        
+
+            {% for post in posts reversed %}
+            <div class="card mt-3 shadow-sm">
+              <div class="card-header"> 
+                <div class="row">
+                  <img src="{{post.icon.url}}" alt="img" width="35px" height="35px" class="rounded-circle mx-2">
+                  <a href="/oprofile/{{post.id}}" class="mt-1">
+                    <p style="font-weight: bold; color: black;"> {{post.user}} </p>
+                  </a>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                  <img src="{{post.image.url}}" style="width: 100%; max-height: 500px;">
+              </div>
+              <div class="card-footer p-2">
+
+                <a href="/like-post/{{post.id}}" class="flex items-center space-x-2">
+                <div class="p-2 rounded-full text-black">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="25" height="25" class="">
+                      <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                  </svg>
+                </div>
+                </a>
+                {% if post.likes == 0 %}
+                <p class="mb-0">No likes</p>
+                {% else %}
+                <p class="mb-0">{{post.likes}} likes </p>
+                {% endif %}
+                <!-- <hr class="my-0"> -->
+               <p class="mb-0"> <b style="font-weight: bold;"> {{post.user}} </b> {{post.caption}}</p> 
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
         <!------------------------Middle column Ends---------------->
 
 
-
-
         <!---------------------------Statrs Right Columns----------------->
-
-            <div class="col-12 col-lg-3">
-
-
-                <div class="right-column">
-
-                    <!-- <div class="card shadow-sm mb-4" >
+        <div class="col-12 col-lg-3">
+          <div class="right-column">
+            <!-- <div class="card shadow-sm mb-4" >
                         <div class="card-body">
                             <h6 class="card-title">Sponsored</h6>
                             <img src="{% static 'images/right1.jpg' %}" alt="card-img" class="card-img mb-3">
@@ -276,88 +314,73 @@
 
                     </div> -->
 
+            <div class="card shadow-sm mb-4">
+              <div class="card-body">
+                <h6 class="card-title">
+                  Likes <a href="#" class="ml-1"><small>.View All</small> </a>
+                </h6>
+                <div class="row no-gutters d-none d-lg-flex">
+                  <div class="col-6 p-1">
+                    <img
+                      src="{% static 'images/avatar-dhg.png' %}"
+                      alt="img"
+                      width="80px"
+                      height="80px"
+                      class="rounded-circle mb-4"
+                    />
+                    <img
+                      src="{% static 'images/avatar-fat.jpg' %}"
+                      alt="img"
+                      width="80px"
+                      height="80px"
+                      class="rounded-circle"
+                    />
+                  </div>
+                  <div class="col-6 p-1 text-left">
+                    <h6>Jacob Thornton @fat</h6>
+                    <a href="#" class="btn btn-outline-info btn-sm mb-3"
+                      ><i class="fas fa-user-friends"></i>Follow
+                    </a>
 
-                    <div class="card shadow-sm mb-4">
-
-                        <div class="card-body">
-
-                                <h6 class="card-title ">Likes <a href="#" class="ml-1"><small>.View All</small> </a> </h6>
-                                <div class="row no-gutters d-none d-lg-flex">
-                                    <div class="col-6 p-1">
-                                            <img src="{% static 'images/avatar-dhg.png' %}" alt="img" width="80px" height="80px" class="rounded-circle mb-4">
-                                            <img src="{% static 'images/avatar-fat.jpg' %}" alt="img" width="80px" height="80px" class="rounded-circle">
-
-
-
-                                    </div>
-                                    <div class="col-6 p-1 text-left">
-                                        <h6>Jacob Thornton @fat</h6>
-                                        <a href="#" class="btn btn-outline-info btn-sm mb-3"><i class="fas fa-user-friends"></i>Follow </a>
-
-                                        <h6>Mark otto</h6>
-                                        <a href="#" class="btn btn-outline-info  btn-sm"><i class="fas fa-user-friends"></i>Follow </a>
-
-                                    </div>
-
-                                </div>
-
-                        </div>
-
-                        <div class="card-footer">
-
-                            <p class="lead" style="font-size:18px;">Dave really likes these nerds, no one knows why though.</p>
-                        </div>
-                        
-
-
-                    </div>
-
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <p>&copy; 2018 Bootstrap
-
-
-
-                                    <a href="#">About</a>
-                                    <a href="#">Help</a>
-                                    <a href="#">Terms</a>
-                                    <a href="#">Privacy</a>
-                                    <a href="#">Cookies</a>
-                                    <a href="#">Ads </a>
-                                    <a href="#">Info</a>
-                                    <a href="#">Brand</a>
-                                    <a href="#">Blog</a>
-                                    <a href="#">Status</a>
-                                    <a href="#">Apps</a>
-                                    <a href="#">Jobs</a>
-                                    <a href="#">Advertise</a>
-                                
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            </p>
-                        </div>
-
-                    </div>
-
+                    <h6>Mark otto</h6>
+                    <a href="#" class="btn btn-outline-info btn-sm"
+                      ><i class="fas fa-user-friends"></i>Follow
+                    </a>
+                  </div>
                 </div>
+              </div>
 
+              <div class="card-footer">
+                <p class="lead" style="font-size: 18px">
+                  Dave really likes these nerds, no one knows why though.
+                </p>
+              </div>
             </div>
+
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <p>
+                  &copy; 2018 Bootstrap
+
+                  <a href="#">About</a>
+                  <a href="#">Help</a>
+                  <a href="#">Terms</a>
+                  <a href="#">Privacy</a>
+                  <a href="#">Cookies</a>
+                  <a href="#">Ads </a>
+                  <a href="#">Info</a>
+                  <a href="#">Brand</a>
+                  <a href="#">Blog</a>
+                  <a href="#">Status</a>
+                  <a href="#">Apps</a>
+                  <a href="#">Jobs</a>
+                  <a href="#">Advertise</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         <!---------------------------Right Columns Ends----------------->
-        
       </div>
     </div>
 
@@ -367,7 +390,6 @@
     </script>
 
     <!------------------------Light BOx OPtions------------->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>

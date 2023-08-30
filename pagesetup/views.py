@@ -11,12 +11,15 @@ def index(request):
     first_name = request.user.first_name
     profile = Profile.objects.get(user = request.user)
     posts = Posts.objects.all()
+    total_posts = len(Posts.objects.filter(user = request.user.username))
+    followers = len(FollowUser.objects.filter(following = request.user.username))
   
     context = {
         'first_name':first_name.capitalize(),
         'profile':profile,
         'posts':posts,
-        
+        'total_post':total_posts,
+        'followers':followers,
     }
 
     return render (request , 'index.html' , context)
@@ -49,7 +52,7 @@ def logout_page(request):
     logout(request)
     return redirect('/login')
 
-def register_page(request):
+def register_page(request):  # sourcery skip: last-if-guard
 
     if request.method == "POST":
 
@@ -139,39 +142,32 @@ def post(request):
     return redirect('/')
 
 @login_required(login_url='/login')
-def profile(request):
+def profile(request , pk):
     
-    prof = Profile.objects.get(user = request.user)
-    posts = Posts.objects.filter(user = request.user.username)
+    # main profile
+    main_profile = Profile.objects.get(user = request.user)
+
+    # profile being opened
+    current_cred = User.objects.get(username = pk)
+    current_profile = Profile.objects.get(user = current_cred)
+    current_posts = Posts.objects.filter(user = pk)
+
+    follow_str = ''
+    if FollowUser.objects.filter(follower = request.user.username , following = pk):
+        follow_str = "Unfollow"
+    else:
+        follow_str = "Follow"
+
     context = {
         'first_name':request.user.first_name.capitalize(),
-        'profile':prof,
-        'posts':posts,
-        'name':f'{request.user.first_name} {request.user.last_name}',
-        'navicon':prof.profile_pic,
+        'profile':current_profile,
+        'posts':current_posts,
+        'main_profile':main_profile,
+        'current_cred':current_cred,
+        'follow_str':follow_str,
     }
 
     return render(request,'profile.html' , context)
-
-@login_required(login_url='/login')
-def oprofile(request , id):
-
-    posts = Posts.objects.get(id = id)
-    username = posts.user
-    user_model = User.objects.get(username=username)
-    profile = Profile.objects.get(user = user_model)
-    current_user = Profile.objects.get(user = request.user)
-    navicon = current_user.profile_pic
-  
-    context = {
-        'profile':profile,
-        'posts': Posts.objects.filter(user = username),
-        'name':f'{user_model.first_name} {user_model.last_name}',
-        'navicon':navicon,
-        'first_name':request.user.first_name.capitalize(),
-    }
-
-    return render(request , 'profile.html' , context)
 
 @login_required(login_url='/login')
 def like_post(request , id):
@@ -187,3 +183,34 @@ def like_post(request , id):
         post.likes = post.likes - 1
     post.save()
     return redirect('/')
+
+def follow(request):
+
+    if request.method =="POST":
+        follower = request.POST.get('follower')
+        following = request.POST.get('following')
+
+        filters = FollowUser.objects.filter(follower = follower , following = following).first()
+        if filters is not None:
+            filters = FollowUser.objects.get(follower = follower , following = following)
+            filters.delete()
+        else:
+            new_follow = FollowUser.objects.create(follower=follower,following=following)
+            new_follow.save()
+        
+        return redirect('/profile/'+following)
+
+
+    return redirect('/')
+
+@login_required(login_url='/login')
+def delete(request , id):
+    post = Posts.objects.get(id = id)
+    post.delete()
+    username = request.user.username
+    return redirect('/profile/'+username)
+
+@login_required(login_url='/login')
+def update(request , id):
+    username = request.user.username
+    return redirect('/profile/'+username)

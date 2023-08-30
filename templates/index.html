@@ -43,7 +43,7 @@
       <div class="collapse navbar-collapse" id="responsive">
         <ul class="navbar-nav mr-auto text-capitalize">
           <li class="nav-item"><a href="/" class="nav-link active">home</a></li>
-          <li class="nav-item"><a href="/profile" class="nav-link active">Profile</a></li>
+          <li class="nav-item"><a href="/profile/{{user.username}}" class="nav-link active">Profile</a></li>
           <li class="nav-item"><a href="/logout" class="nav-link active"> Logout </a> </li>
           <li class="nav-item"><a href="/settings" class="nav-link active"> Settings </a> </li>
         </ul>
@@ -99,13 +99,13 @@
                   <a href="#" class="text-dark text-decoration-none">
                     <li class="nav-item">
                       Followers <br />
-                      <strong>12M</strong>
+                      <strong>{{followers}}</strong>
                     </li></a
                   >
                   <a href="#" class="text-dark text-decoration-none mx-3">
                     <li class="nav-item">
                       Posts <br />
-                      <strong>1</strong>
+                      <strong>{{total_post}}</strong>
                     </li></a
                   >
                 </ul>
@@ -266,7 +266,7 @@
               <div class="card-header"> 
                 <div class="row">
                   <img src="{{post.icon.url}}" alt="img" width="35px" height="35px" class="rounded-circle mx-2">
-                  <a href="/oprofile/{{post.id}}" class="mt-1">
+                  <a href="/profile/{{post.user}}" class="mt-1">
                     <p style="font-weight: bold; color: black;"> {{post.user}} </p>
                   </a>
                 </div>

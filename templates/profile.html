@@ -44,7 +44,7 @@
       <div class="collapse navbar-collapse" id="responsive">
         <ul class="navbar-nav mr-auto text-capitalize">
           <li class="nav-item"><a href="/" class="nav-link active">home</a></li>
-          <li class="nav-item"><a href="/profile" class="nav-link active">Profile</a></li>
+          <li class="nav-item"><a href="/profile/{{user.username}}" class="nav-link active">Profile</a></li>
           <li class="nav-item"><a href="/logout" class="nav-link active"> Logout </a> </li>
           <li class="nav-item"><a href="/settings" class="nav-link active"> Settings </a> </li>
         </ul>
@@ -60,7 +60,7 @@
         ></a>
 
         <img
-          src="{{navicon.url}}"
+          src="{{main_profile.profile_pic.url}}"
           alt=""
           class="rounded-circle ml-3 d-none d-md-block"
           width="32px"
@@ -82,35 +82,64 @@
           width="80px"
           height="80px"
         />
-        <h3 class="text-light mb-2">{{name}}</h3>
+        <h3 class="text-light mb-2">{{current_cred.first_name}} {{current_cred.last_name}}</h3>
         <p class="text-light">
           {{profile.bio}}
         </p>
       </div>
 
       <div class="banner-end d-flex justify-content-center align-items-end">
-        <ul class="nav text-light">
-          <li class="nav-item nav-link active">Photos</li>
-          <li class="nav-item nav-link">Others</li>
-          <li class="nav-item nav-link">Anothers</li>
-        </ul>
+        <form action="/follow" method="post">
+          {% csrf_token %}
+            <ul class="nav text-light">
+            <a href="#feed"><li class="nav-item nav-link active">Photos</li></a>
+            <li class="nav-item nav-link"> Anothers </li>
+
+            <input type="hidden" value="{{user.username}}" name="follower" >
+            <input type="hidden" value="{{current_cred.username}}" name="following">
+            {% if user.username != current_cred.username %}
+            <li class="nav-item nav-link"> 
+              <a>
+                <button type="submit" class="btn-outline-primary"> {{follow_str}} </button>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+          </form>
       </div>
     </div>
 
 
 
     <!--------------------Profile feed----------------->
-    <div class="container my-3">
+    <div class="container my-3" id="feed">
       <div class="row">
 
-        {% for post in posts %}
+        {% for post in posts reversed %}
         <div class="col-lg-4 mb-2">
           <div class="card">
             <div class="card-body m-0 p-0">
               <img src="{{post.image.url}}" class="w-100" height="350px">
             </div>
-            <div class="card-footer">
-              <strong>{{post.likes}} likes</strong>
+            <div class="card-footer row w-100 mx-0 px-2">
+
+              <div class="col-sm-6 w-50 pl-0">
+                <strong>{{post.likes}} likes</strong>
+              </div>
+
+              {% if current_cred.username == user.username %}
+              <div class="col-sm-6 w-50 text-right">
+                <div class="dropdown ms-auto">
+                  <i class="fas fa-ellipsis-h" type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>
+                
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" style="color: red; font-weight: bold;" href="delete/{{post.id}}">Delete post</a>
+                    <a class="dropdown-item" style="color: red; font-weight: bold;" href="update/{{post.id}}">Update post</a>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
             </div>
           </div>
         </div>

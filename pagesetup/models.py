@@ -30,3 +30,7 @@ class likePost(models.Model):
 
     def __str__(self):
         return f'{self.username}|{self.post_id}'
+
+class FollowUser(models.Model):
+    follower = models.CharField(max_length=100)
+    following = models.CharField(max_length=100)

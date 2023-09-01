@@ -14,4 +14,5 @@ urlpatterns = [
     path('follow',views.follow,name='follow'),
     path('profile/delete/<id>',views.delete,name='delete'),
     path('profile/update/<id>',views.update,name='update'),
+    path('search',views.search,name='search'),
 ]

@@ -92,7 +92,7 @@
         <form action="/follow" method="post">
           {% csrf_token %}
             <ul class="nav text-light">
-            <a href="#feed"><li class="nav-item nav-link active">Photos</li></a>
+            <a class="nav-link active" href="#feed"><li>Photos</li></a>
             <li class="nav-item nav-link"> Anothers </li>
 
             <input type="hidden" value="{{user.username}}" name="follower" >
@@ -100,7 +100,7 @@
             {% if user.username != current_cred.username %}
             <li class="nav-item nav-link"> 
               <a>
-                <button type="submit" class="btn-outline-primary"> {{follow_str}} </button>
+                <button type="submit" class="btn btn-outline-primary mb-3"> {{follow_str}} </button>
               </a>
             </li>
             {% endif %}

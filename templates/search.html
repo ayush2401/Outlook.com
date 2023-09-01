@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}" />
+
+    <!------------------LIght BOx for Gallery-------------->
+    <link rel="stylesheet" href="lightbox.min.css" />
+    <script type="text/javascript" src="{% static 'js/lightbox-plus-jquery.min.js' %}" ></script>
+    <!------------------LIght BOx for Gallery-------------->
+
+    <script>lightbox.option({});</script>
+  
+      <!------------------------Light BOx OPtions------------->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    <title>Outlook</title>
+  </head>
+  <body>
+
+    <!-------------------------------NAvigation Starts------------------>
+    <nav
+      class="navbar navbar-expand-md navbar-dark mb-4"
+      style="background-color: #3097d1"
+    >
+      <a href="/" class="navbar-brand"
+        ><img
+          src="{% static 'images/brand-white.png' %}"
+          alt="logo"
+          class="img-fluid"
+          width="80px"
+          height="100px"
+      /></a>
+
+      <button
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#responsive"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="responsive">
+        <ul class="navbar-nav mr-auto text-capitalize">
+          <li class="nav-item"><a href="/" class="nav-link active">home</a></li>
+          <li class="nav-item"><a href="/profile/{{user.username}}" class="nav-link active">Profile</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link active"> Logout </a> </li>
+          <li class="nav-item"><a href="/settings" class="nav-link active"> Settings </a> </li>
+         
+        </ul>
+        <form class="input-group" method="post" action="/search">
+          {% csrf_token %}
+          <div class="input-group" style="padding-left:120px;">
+            <div class="form-outline">
+              <input type="search" name="field" placeholder="Search..." class="form-control" style="width: 500px;"/>
+            </div>
+            <button type="submit" class="btn btn-dark">
+                <i class="fas fa-search"></i>           
+            </button>
+          </div>
+        </form>
+
+        <h6 class="d-none d-md-block mt-2" style="color: white">
+          {{first_name}},
+        </h6>
+        <a
+          href="notification.html"
+          class="text-decoration-none"
+          style="color: #cbe4f2; font-size: 22px"
+          ><i class="far fa-bell ml-3 d-none d-md-block"></i
+        ></a>
+
+        <img
+          src="{{profile.profile_pic.url}}"
+          alt=""
+          class="rounded-circle ml-3 d-none d-md-block"
+          width="32px"
+          height="32px"
+        />
+      </div>
+    </nav>
+    <!---------------------------------------------Ends navigation------------------------------>
+    
+    
+    <!-------------------------------------------Start body --------------------------------->
+    <div class="container">
+      <div class="row">
+
+        <div class="col-12 col-lg-3"></div>
+
+        <!---------------------------------------Middle columns  start---------------->
+        <div class="col-12 col-sm-12">
+          <div class="middle-column">
+            {% for prof in profiles %}
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <a href="profile/{{prof.user}}"><img src="{{prof.profile_pic.url}}" class="rounded-circle ml-3 d-none d-md-block" width="80px" height="80px"/></a>
+                        </div>
+                        <div class="col-sm-8 ml-2" style="font-size: small;">
+                            <p class="mx-3 my-0" style="font-weight: bold; font-size: medium;">{{prof.user.first_name}} {{prof.user.last_name}}</p></a>
+                            <p class="mx-3 my-1" style="line-height: normal;">{{prof.bio}}</p>
+                            <p class="mx-3">{{prof.location}}</p>
+                        </div>
+                        <div class="col-sm-2 ml-5 pl-5">
+                            <a href="profile/{{prof.user}}"><button class="btn btn-outline-primary"> Message </button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <!------------------------Middle column Ends---------------->
+
+      </div>
+    </div>
+    <!-- body Ends------------------>
+</body>
+</html>

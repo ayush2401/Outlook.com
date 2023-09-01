@@ -13,6 +13,10 @@
       color: #212529;
       text-align: left;
   }
+
+a {
+    text-decoration: none;
+}
   
 .banner{
     background-image: url(../../static/images/banner.jpg);

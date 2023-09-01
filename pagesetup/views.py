@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
+from itertools import chain
+import random
 
 @login_required(login_url ='/login')
 def index(request):
@@ -13,13 +15,44 @@ def index(request):
     posts = Posts.objects.all()
     total_posts = len(Posts.objects.filter(user = request.user.username))
     followers = len(FollowUser.objects.filter(following = request.user.username))
-  
+
+    user_object = FollowUser.objects.filter(follower=request.user.username)
+    # feed = [Posts.objects.filter(user = i.following) for i in user_object]
+    # feed.append(Posts.objects.filter(user = request.user.username))
+    # feed = list(chain(*feed))
+    # feed = sorted(feed, key=lambda i: i.date)
+    # posts = feed
+
+    # user suggestion starts
+    all_users = User.objects.all()
+    user_following_all = []
+
+    for user in user_object:
+        user_list = User.objects.get(username=user.following)
+        user_following_all.append(user_list)
+    
+    new_suggestions_list = [x for x in list(all_users) if (x not in list(user_following_all))]
+    current_user = User.objects.filter(username=request.user.username)
+    final_suggestions_list = [x for x in list(new_suggestions_list) if ( x not in list(current_user))]
+    random.shuffle(final_suggestions_list)
+
+    username_profile_list = []
+
+    for users in final_suggestions_list:
+        profile_lists = Profile.objects.filter(user = users)
+        username_profile_list.append(profile_lists)
+
+    recommend = list(chain(*username_profile_list))
+
+    # user suggestion ends
+
     context = {
         'first_name':first_name.capitalize(),
         'profile':profile,
         'posts':posts,
         'total_post':total_posts,
         'followers':followers,
+        'recommend':recommend,
     }
 
     return render (request , 'index.html' , context)
@@ -214,3 +247,28 @@ def delete(request , id):
 def update(request , id):
     username = request.user.username
     return redirect('/profile/'+username)
+
+def search(request):
+    
+    if request.method == "POST":
+
+        field = request.POST.get('field')
+        users = [list(User.objects.filter(username__icontains=field))]
+        users.append(list(User.objects.filter(first_name__icontains=field)))
+        users.append(list(User.objects.filter(last_name__icontains=field)))
+        users = list(chain(*users))
+        users = list(set(users))
+        profiles = []
+        for user in users:
+            profiles.append(Profile.objects.filter(user=user))
+
+        profiles = list(chain(*profiles))
+
+        context = {
+            'first_name':request.user.first_name.capitalize(),
+            'profiles':profiles,
+            'profile':Profile.objects.get(user = request.user),
+        }    
+
+    return render(request,'search.html',context)
+    

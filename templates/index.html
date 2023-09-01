@@ -46,11 +46,23 @@
           <li class="nav-item"><a href="/profile/{{user.username}}" class="nav-link active">Profile</a></li>
           <li class="nav-item"><a href="/logout" class="nav-link active"> Logout </a> </li>
           <li class="nav-item"><a href="/settings" class="nav-link active"> Settings </a> </li>
+         
         </ul>
+        <form class="input-group" method="post" action="/search">
+          {% csrf_token %}
+          <div class="input-group" style="padding-left:120px;">
+            <div class="form-outline">
+              <input type="search" name="field" placeholder="Search..." class="form-control" style="width: 500px;"/>
+            </div>
+            <button type="submit" class="btn btn-dark">
+                <i class="fas fa-search"></i>           
+            </button>
+          </div>
+        </form>
 
-        <h5 class="d-none d-md-block mt-2" style="color: white">
+        <h6 class="d-none d-md-block mt-2" style="color: white">
           {{first_name}},
-        </h5>
+        </h6>
         <a
           href="notification.html"
           class="text-decoration-none"
@@ -321,31 +333,23 @@
                 </h6>
                 <div class="row no-gutters d-none d-lg-flex">
                   <div class="col-6 p-1">
+                    {% for i in recommend %}
                     <img
-                      src="{% static 'images/avatar-dhg.png' %}"
+                      src="{{i.profile_pic.url}}"
                       alt="img"
                       width="80px"
                       height="80px"
                       class="rounded-circle mb-4"
                     />
-                    <img
-                      src="{% static 'images/avatar-fat.jpg' %}"
-                      alt="img"
-                      width="80px"
-                      height="80px"
-                      class="rounded-circle"
-                    />
+                    {% endfor %}
                   </div>
                   <div class="col-6 p-1 text-left">
-                    <h6>Jacob Thornton @fat</h6>
+                    {% for i in recommend %}
+                    <h6>{{i.user}}</h6>
                     <a href="#" class="btn btn-outline-info btn-sm mb-3"
                       ><i class="fas fa-user-friends"></i>Follow
                     </a>
-
-                    <h6>Mark otto</h6>
-                    <a href="#" class="btn btn-outline-info btn-sm"
-                      ><i class="fas fa-user-friends"></i>Follow
-                    </a>
+                    {% endfor %}
                   </div>
                 </div>
               </div>

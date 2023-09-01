@@ -98,11 +98,7 @@
             <input type="hidden" value="{{user.username}}" name="follower" >
             <input type="hidden" value="{{current_cred.username}}" name="following">
             {% if user.username != current_cred.username %}
-            <li class="nav-item nav-link"> 
-              <a>
-                <button type="submit" class="btn btn-outline-primary mb-3"> {{follow_str}} </button>
-              </a>
-            </li>
+                <button type="submit" class="btn btn-link pb-1 text-decoration-none"> {{follow_str}} </button>
             {% endif %}
           </ul>
           </form>
@@ -117,9 +113,9 @@
 
         {% for post in posts reversed %}
         <div class="col-lg-4 mb-2">
-          <div class="card">
-            <div class="card-body m-0 p-0">
-              <img src="{{post.image.url}}" class="w-100" height="350px">
+          <div class="card h-100">
+            <div class="card-body p-0 m-0">
+              <a href="{{post.image.url}}"><img src="{{post.image.url}}" class="w-100" height="300px"></a>
             </div>
             <div class="card-footer row w-100 mx-0 px-2">
 

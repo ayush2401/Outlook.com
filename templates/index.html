@@ -255,10 +255,22 @@
                         {% csrf_token %}
                     
                         <div class="mb-2">
-                            <input type="file" class="form-control" required="true" name="image">
+                          <!-- <label for="input-b4a">Readonly Input</label> -->
+                          <div> <input type="file" accept="image/*" name= "image" onchange="loadFile(event)"></div>
+                          <div class="mt-2 rounded-2 border border-primary p-1 mx-auto"><img id="output" style="max-block-size: 300px;"> </div>
+                          <script>
+                          var loadFile = function(event) {
+                            var output = document.getElementById('output');
+                            output.src = URL.createObjectURL(event.target.files[0]);
+                            output.onload = function() {
+                              URL.revokeObjectURL(output.src) // free memory
+                            }
+                          };
+                          </script>
                         </div>
+
                         <div class="mb-2">
-                            <input class="form-control" name="caption" placeholder="caption...">
+                            <textarea class="form-control" name="caption" placeholder="caption..."></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -314,17 +326,15 @@
         <!---------------------------Statrs Right Columns----------------->
         <div class="col-12 col-lg-3">
           <div class="right-column">
-            <!-- <div class="card shadow-sm mb-4" >
+            <div class="card shadow-sm mb-4" >
                         <div class="card-body">
                             <h6 class="card-title">Sponsored</h6>
                             <img src="{% static 'images/right1.jpg' %}" alt="card-img" class="card-img mb-3">
                             <p class="card-text text-justify"> <span class="h6">It might be time to visit Iceland.</span> Iceland is so chill, and everything looks cool here. Also, we heard the people are pretty nice.  What are you waiting for?</p>
-                            <a href="#" class="btn btn-outline-info card-link btn-sm">Buy a ticket</a>
-
-
+                            <a target="_blank" href="https://www.makemytrip.com/flight/search?itinerary=DEL-BLR-02/09/2023&tripType=O&paxType=A-1_C-0_I-0&intl=false&cabinClass=E&ccde=IN&lang=eng" class="btn btn-outline-info card-link btn-sm">Buy a ticket</a>
                         </div>
 
-                    </div> -->
+                    </div>
 
             <div class="card shadow-sm mb-4">
               <div class="card-body">
@@ -332,8 +342,8 @@
                   Likes <a href="#" class="ml-1"><small>.View All</small> </a>
                 </h6>
                 <div class="row no-gutters d-none d-lg-flex">
+                  {% for i in recommend %}
                   <div class="col-6 p-1">
-                    {% for i in recommend %}
                     <img
                       src="{{i.profile_pic.url}}"
                       alt="img"
@@ -341,16 +351,14 @@
                       height="80px"
                       class="rounded-circle mb-4"
                     />
-                    {% endfor %}
                   </div>
                   <div class="col-6 p-1 text-left">
-                    {% for i in recommend %}
                     <h6>{{i.user}}</h6>
-                    <a href="#" class="btn btn-outline-info btn-sm mb-3"
+                    <a href="profile/{{i.user}}" class="btn btn-outline-info btn-sm mb-3"
                       ><i class="fas fa-user-friends"></i>Follow
                     </a>
-                    {% endfor %}
                   </div>
+                  {% endfor %}
                 </div>
               </div>
 
@@ -385,6 +393,7 @@
           </div>
         </div>
         <!---------------------------Right Columns Ends----------------->
+
       </div>
     </div>
 

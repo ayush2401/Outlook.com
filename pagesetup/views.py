@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate , login , logout
 from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
-
+from django.db.models import Q
 
 
 @login_required(login_url ='/login')
@@ -195,11 +195,12 @@ def search(request):
     if request.method == "POST":
 
         field = request.POST.get('field')
-        users = [list(User.objects.filter(username__icontains=field))]
-        users.append(list(User.objects.filter(first_name__icontains=field)))
-        users.append(list(User.objects.filter(last_name__icontains=field)))
-        users = list(chain(*users))
-        users = list(set(users))
+        users = User.objects.filter(
+            Q(username__icontains=field)|
+            Q(first_name__icontains=field)|
+            Q(last_name__icontains=field)
+        )
+      
         profiles = []
         for user in users:
             profiles.append(Profile.objects.filter(user=user))

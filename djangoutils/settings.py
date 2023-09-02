@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.vercel.app' , 'now.sh' , '127.0.0.1' , 'localhost']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,7 +87,7 @@ DATABASES = {
 #         'ENGINE': 'djongo',
 #         'NAME': 'socialmedia',
 #         'CLIENT': {
-#            'host': 'mongodb://localhost:27017',
+#            'host': 'mongodb+srv://ayushsaraf1:sarafayush1@cluster0.qyb7ajd.mongodb.net/',
 #         }
 #     }
 # }

@@ -57,68 +57,6 @@ def index(request):
 
     return render (request , 'index.html' , context)
 
-def login_page(request):
-
-    if request.method == "POST":
-
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        if not User.objects.filter(username = username).exists():
-            messages.error(request , 'Invalid username')
-            return redirect('/login')
-        
-        user = authenticate(username = username , password = password)
-
-        if user is None:
-            messages.error(request , 'Invalid password')
-            return redirect('/login')
-        else:
-
-            login(request,user)
-            return redirect('/')
-
-
-    return render(request , 'login_page.html')
-
-def logout_page(request):
-    logout(request)
-    return redirect('/login')
-
-def register_page(request):  # sourcery skip: last-if-guard
-
-    if request.method == "POST":
-
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-
-        user = User.objects.filter(username = username)
-
-        if user.exists():
-            messages.info(request, "Username already taken")
-            return redirect('/register')
-
-
-        user = User.objects.create(
-            first_name = first_name,
-            last_name = last_name,
-            username = username,
-        )
-
-        user.set_password(password)
-        user.save()
-
-        user_model = User.objects.get(username=username)
-        new_profile = Profile.objects.create(user=user_model)
-        new_profile.save()
-
-        return redirect('/register')
-
-    return render(request , 'register_page.html')
-
 @login_required(login_url='/login')
 def settings(request):
     
@@ -217,6 +155,7 @@ def like_post(request , id):
     post.save()
     return redirect('/')
 
+@login_required(login_url='/login')
 def follow(request):
 
     if request.method =="POST":
@@ -248,6 +187,7 @@ def update(request , id):
     username = request.user.username
     return redirect('/profile/'+username)
 
+@login_required(login_url='/login')
 def search(request):
     
     if request.method == "POST":
@@ -272,3 +212,65 @@ def search(request):
 
     return render(request,'search.html',context)
     
+
+def login_page(request):
+
+    if request.method == "POST":
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not User.objects.filter(username = username).exists():
+            messages.error(request , 'Invalid username')
+            return redirect('/login')
+        
+        user = authenticate(username = username , password = password)
+
+        if user is None:
+            messages.error(request , 'Invalid password')
+            return redirect('/login')
+        else:
+            login(request,user)
+            return redirect('/')
+
+
+    return render(request , 'login_page.html')
+
+def logout_page(request):
+    logout(request)
+    return redirect('/login')
+
+def register_page(request):  # sourcery skip: last-if-guard
+
+    if request.method == "POST":
+
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+
+        user = User.objects.filter(username = username)
+
+        if user.exists():
+            messages.info(request, "Username already taken")
+            return redirect('/register')
+
+
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            username = username,
+        )
+
+        user.set_password(password)
+        user.save()
+
+        user_model = User.objects.get(username=username)
+        new_profile = Profile.objects.create(user=user_model)
+        new_profile.save()
+
+        messages.info(request, "Account created successfully")
+        return redirect('/register')
+
+    return render(request , 'register_page.html')

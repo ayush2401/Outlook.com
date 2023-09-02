@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
 
+
+
 @login_required(login_url ='/login')
 def index(request):
 

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+0a+@zv1a3^87q^rop%qy(*c7c=a_et6(ht_=8vz)n9v(7k#=(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app' , 'now.sh' , '127.0.0.1' , 'localhost']
+# ALLOWED_HOSTS = ['.vercel.app' , 'now.sh' , '127.0.0.1' , 'localhost']
 
 
 # Application definition
@@ -85,10 +85,7 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'djongo',
-#         'NAME': 'socialmedia',
-#         'CLIENT': {
-#            'host': 'mongodb+srv://ayushsaraf1:sarafayush1@cluster0.qyb7ajd.mongodb.net/',
-#         }
+#         'NAME': 'myapp',
 #     }
 # }
 

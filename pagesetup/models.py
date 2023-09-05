@@ -33,4 +33,4 @@ class likePost(models.Model):
 
 class FollowUser(models.Model):
     follower = models.CharField(max_length=100)
-    following = models.CharField(max_length=100)
+    following = models.CharField(max_length=10)

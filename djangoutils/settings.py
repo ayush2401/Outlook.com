@@ -28,6 +28,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['.vercel.app' , 'now.sh' , '127.0.0.1' , 'localhost']
 
+# AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Application definition
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pagesetup',
+    # 'accounts',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +87,7 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'djongo',
-#         'NAME': 'myapp',
+#         'NAME': 'app',
 #     }
 # }
 

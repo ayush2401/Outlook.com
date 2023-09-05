@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from itertools import chain
 import random
 from django.db.models import Q
+from django.contrib.auth import get_user_model
+# User = get_user_model()
 
 
 @login_required(login_url ='/login')
@@ -81,8 +83,14 @@ def settings(request):
 
         if image:
             profile.profile_pic = image
+            posts = Posts.objects.filter(user=request.user)
+            for post in posts:
+                post.icon = image
+                post.save()
         
         profile.save()
+
+
         messages.success(request,"Profile updated successfully")
         return redirect('/settings')
     
